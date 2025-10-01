@@ -1,0 +1,887 @@
+/* Reset y estilos base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  color: #f8f9fa;
+  background-color: #0f0f0f; /* Fondo oscuro para vibe premium */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23ffffff" opacity="0.05"/><circle cx="75" cy="75" r="1" fill="%23ffffff" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>'); /* Textura sutil de "cuero" */
+  overflow-x: hidden;
+}
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Animaciones generales */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Navegación moderna: Fija con blur y hover animado */
+.navbar {
+  background: rgba(15, 15, 15, 0.95); /* Glassmorphism: semi-transparente */
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 180, 216, 0.2);
+  padding: 1rem 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: background 0.3s ease;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  position: relative; /* Para hamburguesa */
+}
+
+  .nav-logo {
+    color: #f8f9fa; /* Blanco base */
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+  }
+  .nav-logo:hover {
+    color: #00b4d8; /* Solo azul en hover */
+  }
+
+.nav-logo-img {
+  width: 40px;
+  height: 40px;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.nav-logo:hover .nav-logo-img {
+  transform: rotate(360deg); /* Animación giratoria sutil */
+ }
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 2.5rem;
+}
+
+.nav-link {
+  color: #f8f9fa;
+  text-decoration: none;
+  font-weight: 400;
+  position: relative;
+  transition: color 0.3s ease;
+  padding-bottom: 0.5rem;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #eaf5f7, #00b4d8);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-link:hover {
+  color: #00b4d8;
+}
+
+/* Botón hamburguesa */
+  .hamburger {
+    display: none; /* Oculto en desktop */
+    flex-direction: column;
+    cursor: pointer;
+    padding: 0.5rem;
+    background: none;
+    border: none;
+    z-index: 1001;
+  }
+
+  .hamburger span {
+    width: 25px;
+    height: 3px;
+    background: #ffffff;
+    margin: 3px 0;
+    transition: 0.3s;
+    border-radius: 2px;
+  }
+
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+  }
+
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+  }
+
+  /* Menú en móvil (reforzado) */
+  @media (max-width: 768px) {
+    .hamburger {
+      display: flex; /* ← Visible en móvil */
+    }
+
+    .nav-menu {
+      position: fixed;
+      top: 0; /* Cubre navbar */
+      left: -100%; /* Oculto */
+      width: 100%;
+      height: 100vh;
+      background: rgba(15, 15, 15, 0.98);
+      backdrop-filter: blur(10px);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 0;
+      gap: 2rem;
+      transition: left 0.3s ease;
+      z-index: 999;
+    }
+
+    .nav-menu.active {
+      left: 0; /* ← Muestra al toggle */
+    }
+
+    .nav-link {
+      font-size: 1.5rem; /* Más grande para touch */
+      padding: 1rem;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Overlay para cerrar */
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 998;
+    }
+  }
+  
+
+/* Contenido principal con padding top para navbar fijo */
+.main-content {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 2rem 2rem; /* Espacio para navbar + márgenes */
+}
+
+  /* Hero section: Gradiente azul consistente con tema */
+  .hero {
+    text-align: center;
+    background: url('../../Tapiceria-Lider/public/image/fondo.jpg'); /* Placeholder; cambia por /images/volante-hero.jpg */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Parallax */
+    color: #fff;
+    padding: 8rem 2rem 6rem;
+    margin-bottom: 4rem;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 100%);
+    z-index: 1;
+  }
+
+  .hero > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    animation: fadeInUp 1s ease-out;
+  }
+
+  .hero p {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+
+  /* Botón general: Gradiente azules con shimmer */
+  .btn {
+    background: black; /* Solo azules */
+    color: #fff;
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(140, 194, 205, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+  .btn:hover::before {
+    left: 100%;
+  }
+  .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(140, 194, 205, 0.3);
+    color: #fff;
+  }
+
+/* Secciones generales: Cards modernas con glassmorphism */
+.section {
+  background: transparent;
+  backdrop-filter: blur(10px);
+  padding: 3rem;
+  margin-bottom: 3rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(140, 194, 205, 0.3);
+}
+
+.section h2 {
+  color:white;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.section p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Servicios: Lista como cards con iconos */
+.servicios-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.servicios-list li {
+  background: transparent;
+  padding: 1.5rem;
+  border-radius: 15px;
+  text-align: center;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  backdrop-filter: blur(10px);
+}
+
+.servicios-list li:hover {
+  background: transparent;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(140, 194, 205, 0.3);
+}
+
+.servicios-list i {
+  font-size: 2.5rem;
+  color: #00b4d8;
+}
+
+.servicios-list span {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+/* Galería general (para Trabajos) y Home */
+.galeria-home {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 en desktop: lado a lado */
+  gap: 1.5rem;
+  margin-top: 2rem;
+  max-width: 900px;  /* ← Nuevo: Limita ancho para mejor centrado */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.galeria-home img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 15px;
+  transition: all 0.4s ease;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.galeria-home img:hover {
+  transform: scale(1.05) rotate(1deg);
+  box-shadow: 0 15px 40px rgba(0, 180, 216, 0.3);  /* ← Mejora hover con glow azul */
+}
+
+/* ← FIX: Solo 1 imagen en móvil (oculta las extras, fuerza 1 columna) */
+@media (max-width: 768px) {
+  .galeria-home {
+    grid-template-columns: 1fr !important; /* Fuerza 1 columna */
+    gap: 1rem !important;  /* ← Reforzado con !important */
+    max-width: 100%;  /* Full en móvil */
+  }
+
+  .galeria-home img {
+    height: 250px !important;  /* ← Más alta para impacto (única visible) */
+  }
+
+  /* ← NUEVO: Oculta imágenes 2 y 3 en móvil – solo muestra la primera */
+  .galeria-home img:nth-child(n+2) {
+    display: none !important;  /* Oculta la 2da y 3ra (n+2 significa "a partir de la 2da") */
+  }
+
+  /* Asegura que la primera img ocupe full espacio */
+  .galeria-home img:nth-child(1) {
+    grid-column: 1 / -1;  /* Ocupa toda la fila */
+    width: 100%;
+  }
+}
+
+
+.ver-mas-btn {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Galería para Trabajos: Grid responsive (NUEVO – No afecta Home) */
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));  /* Desktop: 2-3 columnas auto-fit */
+  gap: 1.5rem;
+  margin-top: 2rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ← FIX Flip: Asegura clic en img burbujea al padre (no bloquea toggle) */
+.galeria .flip-card img {
+  pointer-events: auto;  /* Permite eventos al padre */
+  user-select: none;  /* Evita selección accidental */
+}
+
+/* Móvil: 1 columna (apila todas las cards, sin ocultar) */
+@media (max-width: 768px) {
+  .galeria {
+    grid-template-columns: 1fr !important;  /* Apila verticalmente */
+    gap: 1rem !important;
+    max-width: 100%;
+  }
+}
+
+/* Formulario: Moderno con focus animado */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #00b4d8;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #f8f9fa;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(248, 249, 250, 0.6);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #00b4d8;
+  box-shadow: 0 0 20px rgba(0, 180, 216, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Footer elegante con social icons */
+.footer {
+  background: rgba(15, 15, 15, 0.95);
+  backdrop-filter: blur(10px);
+  color: #f8f9fa;
+  text-align: center;
+  padding: 2rem;
+  border-top: 1px solid rgba(0, 180, 216, 0.2);
+  font-size: 0.9rem;
+}
+
+.social-icons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.social-icons a,
+.mobile-social a {
+  color: #f8f9fa;
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.social-icons a:hover,
+.mobile-social a:hover {
+  color: #00b4d8;
+  transform: translateY(-3px);
+}
+
+.mobile-social {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem 0;
+  gap: 1.5rem;
+  background: rgba(15, 15, 15, 0.9);
+  border-top: 1px solid rgba(0, 180, 216, 0.2);
+}
+
+.footer-credit {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: rgba(248, 249, 250, 0.7);
+}
+
+.footer-credit a {
+  color: #00b4d8;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-credit a:hover {
+  color: #e63946;
+  text-decoration: underline;
+}
+
+/* Imágenes en secciones (ej. SobreMi) */
+.section img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 15px;
+  margin-top: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.section img:hover {
+  transform: scale(1.02);
+} 
+  /* Botón fijo de WhatsApp: Verde oficial, visible y adaptado */
+  .whatsapp-float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    background: linear-gradient(135deg, #25D366, #128C7E); /* Verde WhatsApp oficial */
+    color: #fff !important; /* Fuerza blanco en ícono */
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px; /* Ícono grande */
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+    z-index: 1001;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+  }
+
+  .whatsapp-float:hover {
+    transform: scale(1.1) rotate(10deg);
+    box-shadow: 0 12px 35px rgba(37, 211, 102, 0.5);
+    color: #fff !important;
+  }
+
+  .whatsapp-float i {
+    margin: 0;
+    color: #fff !important; /* Blanco explícito para ícono */
+  }
+  
+   /* Modal para Galería (Home/Trabajos): Alto z-index, fixed global (arriba de todo) – REEMPLAZAR COMPLETO */
+.modal-overlay,
+.flip-modal-overlay {
+  position: fixed !important;  /* ← FIX: Fuerza fixed al viewport (no hereda de main/section) */
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100vh !important;  /* ← FIX: Full viewport height (cubre navbar y body) */
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 4000 !important;  /* ← FIX: Muy alto (arriba de navbar 1000 y sections) */
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background: rgba(15, 15, 15, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 1rem;
+  max-width: 500px;
+  width: 90%;
+  max-height: 60vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 4001 !important;  /* ← FIX: Aún más alto para contenido */
+  animation: fadeInUp 0.3s ease-out;  /* Animación suave al abrir */
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  color: #f8f9fa;
+  font-size: 1.8rem;
+  cursor: pointer;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.3s;
+  z-index: 4002 !important;  /* ← FIX: Sobre modal-content */
+}
+
+.modal-close:hover {
+  background: rgba(0, 180, 216, 0.2);
+}
+
+.modal-content img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+.modal-desc {
+  text-align: center;
+  color: #f8f9fa;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.modal-desc h2 {
+  color: #00b4d8;
+  margin: 0;
+  font-size: 1.3rem;
+  line-height: 1.3;
+}
+
+.modal-desc p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.modal-desc .btn {
+  padding: 0.7rem 1.5rem;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+
+/* Responsive: Móvil compacto */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    padding: 0.8rem;
+    max-height: 70vh;
+    gap: 0.8rem;
+  }
+
+  .modal-content img {
+    height: 150px;
+  }
+
+  .modal-desc h2 {
+    font-size: 1.2rem;
+  }
+
+  .modal-desc p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .modal-close {
+    font-size: 1.6rem;
+    top: 0.3rem;
+    right: 0.3rem;
+  }
+
+  .modal-desc .btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
+
+  .trabajo-card {
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .trabajo-card:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Flip Cards para Trabajos (toggle simple: 3D real con prefijos webkit para mobile) */
+.flip-card {
+  perspective: 1000px;  /* Profundidad 3D */
+  -webkit-perspective: 1000px;  /* ← FIX: Prefijo para mobile */
+  cursor: pointer;
+  height: 300px; /* Altura fija para flip en desktop */
+  width: 100%;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  border-radius: 15px;
+  position: relative;  /* Contenedor para 3D */
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);  /* Suave 3D con easing mobile-friendly */
+  transform-style: preserve-3d !important;  /* Fuerza 3D */
+  -webkit-transform-style: preserve-3d !important;  /* ← FIX: Prefijo webkit para iOS/Safari */
+  overflow: visible;  /* ← FIX Temporal: Quita hidden para evitar colapso 3D en mobile (agrega hidden si desborda) */
+}
+
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);  /* Giro horizontal 180° */
+  -webkit-transform: rotateY(180deg);  /* ← FIX: Prefijo para consistencia */
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden !important;  /* Oculta front al girar */
+  -webkit-backface-visibility: hidden !important;  /* ← FIX: Prefijo clave para mobile (oculta imagen rotada) */
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background: transparent;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  z-index: 1;  /* Base para stacking */
+}
+
+.flip-card-front {
+  background: rgba(0, 0, 0, 0.2);  /* Fondo sutil para front */
+  z-index: 2;  /* Front arriba inicialmente */
+}
+
+.flip-card-front img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  flex-shrink: 0;
+}
+
+.flip-card-front p {  /* Si hay texto en frente */
+  font-size: 0.9rem;
+  color: #f8f9fa;
+  margin: 0;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);  /* Rotación inicial para back */
+  -webkit-transform: rotateY(180deg);  /* ← FIX: Prefijo */
+  background: rgba(0, 20, 40, 0.95) !important;  /* Fondo opaco (info visible) */
+  backdrop-filter: blur(15px);
+  padding: 1rem;
+  color: #f8f9fa;  /* Texto blanco */
+  z-index: 3 !important;  /* ← FIX: Back arriba al girar (supera front si backface falla) */
+}
+
+.flip-card-back h3 {
+  color: #00b4d8 !important;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  line-height: 1.3;
+  flex-shrink: 0;
+}
+
+.flip-card-back p {
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+  line-height: 1.4;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 0.5rem;
+}
+
+.flip-card-back a {  /* WhatsApp btn */
+  flex-shrink: 0;
+  margin-top: auto;
+}
+
+/* ← FIX Móvil: 3D reforzado con prefijos, back visible */
+@media (max-width: 768px) {
+  .flip-card {
+    height: 250px !important;
+    margin-bottom: 1.5rem;
+  }
+
+  .flip-card-inner {
+    transform-style: preserve-3d !important;
+    -webkit-transform-style: preserve-3d !important;  /* ← FIX: Prefijo en mobile */
+    transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);  /* Más lento para touch */
+  }
+
+  .flip-card-front, .flip-card-back {
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;  /* ← FIX: Oculta front 100% en iOS */
+    padding: 0.8rem !important;
+    z-index: 1;  /* Reset en mobile */
+  }
+
+  .flip-card-front {
+    z-index: 2;
+  }
+
+  .flip-card-back {
+    z-index: 3 !important;  /* Back visible */
+    background: rgba(0, 20, 40, 0.98) !important;  /* Casi opaco para contraste max */
+  }
+
+  .flip-card-front img {
+    height: 150px !important;
+  }
+
+  .flip-card-back h3 {
+    font-size: 1.1rem !important;
+    margin-bottom: 0.3rem !important;
+  }
+
+  .flip-card-back p {
+    font-size: 0.85rem !important;
+    margin: 0.3rem 0 !important;
+    line-height: 1.3 !important;
+    max-height: 80px;
+    overflow-y: auto;
+  }
+
+  .flip-card-back a {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.8rem !important;
+    margin-top: 0.5rem !important;
+  }
+
+  /* Oculta modal en móvil (mueve fuera si interfiere – pero no debería) */
+  .flip-modal-overlay {  
+    display: none !important;
+  }
+}
