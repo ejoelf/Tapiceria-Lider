@@ -1,16 +1,44 @@
-# React + Vite
+# Tapicería Líder 🚗🛠️  
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Proyecto web desarrollado con **React + Vite** para la **Tapicería Líder**, un emprendimiento especializado en la restauración y tapizado de volantes de autos.  
 
-Currently, two official plugins are available:
+El objetivo de esta página es mostrar los **servicios**, **galería de trabajos realizados** y ofrecer un **canal de contacto** para clientes interesados.  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## ✨ Funcionalidades principales (en progreso)
+- Página de inicio con información del taller.  
+- Sección de servicios: tapizado, reparación y personalización de volantes.  
+- Galería de fotos de trabajos terminados.  
+- Formulario de contacto.  
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Tecnologías utilizadas
+- [React](https://reactjs.org/)  
+- [Vite](https://vitejs.dev/)  
+- [JavaScript (ES6+)](https://developer.mozilla.org/es/docs/Web/JavaScript)  
+- [CSS Modules]
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🚀 Instalación y ejecución
+
+Clonar el repositorio:
+bash
+"git clone https://github.com/ejoelf/Tapiceria-Lider.git"
+
+instalar dependencias:
+npm install
+
+Ejecutar en modo desarrollo:
+npm run dev
+
+La aplicación estará disponible en:
+👉 http://localhost:5173
+
+📌 Estado del proyecto
+
+En desarrollo. Actualmente se está construyendo.
+git clone https://github.com/ejoelf/Tapiceria-Lider.git
+
