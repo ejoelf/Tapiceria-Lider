@@ -24,15 +24,11 @@ const trabajosData = [
   },
 ]
 
-const testimoniosData = [  
-  { nombre: 'Juan Pérez', texto: 'Excelente trabajo en mi BMW. El volante quedó como nuevo, ¡recomendado 100%!' },
-  { nombre: 'María López', texto: 'Rápido y profesional. Usaron materiales de calidad, mi auto se ve premium ahora.' },
-  { nombre: 'Carlos Ruiz', texto: 'Personalización perfecta. Atención impecable, volveré por más.' }
-]
+
 
 function Trabajos() {
   const [selectedTrabajo, setSelectedTrabajo] = useState(null)  
-  const [reseña, setReseña] = useState({ nombre: '', texto: '' })  
+  
 
   const [flippedCard, setFlippedCard] = useState(null)  
   const toggleFlip = (id) => {
@@ -42,16 +38,9 @@ function Trabajos() {
   const openModal = (trabajo) => setSelectedTrabajo(trabajo)
   const closeModal = () => setSelectedTrabajo(null)
 
-  const handleReseñaSubmit = (e) => {
-    e.preventDefault()
-    if (reseña.nombre && reseña.texto) {
-      alert(`¡Gracias, ${reseña.nombre}! Tu reseña ha sido enviada. "${reseña.texto}"`)
-      setReseña({ nombre: '', texto: '' })
-    }
-  }
 
   return (
-    <>  {/* ← FIX: React Fragment – Permite modal fuera de main para z-index global */}
+    
       <main className="main-content">
         <section className="section fade-in">
           <h1>Nuestros Trabajos</h1>
@@ -70,11 +59,11 @@ function Trabajos() {
                       <img 
                         src={trabajo.img} 
                         alt={trabajo.titulo} 
-                        onDoubleClick={() => {  // ← FIX: Doble clic abre modal SOLO en desktop (no interfiere con flip simple)
+                        onDoubleClick={() => { 
                           if (window.innerWidth > 768) openModal(trabajo);
                         }}
-                        style={{ cursor: 'pointer' }}  // Visual cue para interacción
-                        title="Clic simple para ver info, doble clic para zoom (desktop)"  // ← Tooltip explicativo (opcional)
+                        style={{ cursor: 'pointer' }}  
+                        title="Clic simple para ver info, doble clic para zoom (desktop)" 
                       />
                     </div>
                     <div className="flip-card-back">
@@ -91,43 +80,7 @@ function Trabajos() {
             </div>
         </section>
 
-        <section className="section fade-in">
-          <h2>Testimonios</h2>
-          <div className="testimonios-grid">
-            {testimoniosData.map((testimonio, index) => (
-              <div key={index} className="testimonio-card">
-                <p>"{testimonio.texto}"</p>
-                <h4>- {testimonio.nombre}</h4>
-              </div>
-            ))}
-          </div>
-
-          <h3>¡Deja tu reseña!</h3>
-          <form onSubmit={handleReseñaSubmit} className="reseña-form">
-            <div className="form-group">
-              <label>Tu Nombre:</label>
-              <input
-                type="text"
-                value={reseña.nombre}
-                onChange={(e) => setReseña({ ...reseña, nombre: e.target.value })}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>Tu Reseña:</label>
-              <textarea
-                rows="4"
-                value={reseña.texto}
-                onChange={(e) => setReseña({ ...reseña, texto: e.target.value })}
-                placeholder="Cuéntanos sobre tu experiencia..."
-                required
-              />
-            </div>
-            <button type="submit" className="btn">Enviar</button>
-          </form>
-        </section>
-      </main>
-
+        
       {/* ← FIX: Modal FUERA de main – Ahora global, cubre toda la pantalla (no atrapado) */}
       {selectedTrabajo && (
         <div className="flip-modal-overlay" onClick={closeModal}>
@@ -142,7 +95,7 @@ function Trabajos() {
           </div>
         </div>
       )}
-    </>
+    </main>
   )
 }
 
