@@ -10,6 +10,16 @@ module.exports = {
       `SELECT id, code FROM permissions;`
     );
 
+    const [existingRolePermissions] = await queryInterface.sequelize.query(
+      `SELECT role_id, permission_id FROM role_permissions;`
+    );
+
+    const existingPairs = new Set(
+      existingRolePermissions.map(
+        (item) => `${item.role_id}-${item.permission_id}`
+      )
+    );
+
     const roleMap = Object.fromEntries(roles.map((role) => [role.name, role.id]));
     const permissionMap = Object.fromEntries(
       permissions.map((permission) => [permission.code, permission.id])
@@ -20,8 +30,6 @@ module.exports = {
     const superAdminRows = allPermissionIds.map((permissionId) => ({
       role_id: roleMap.super_admin,
       permission_id: permissionId,
-      created_at: new Date(),
-      updated_at: new Date(),
     }));
 
     const adminPermissionCodes = [
@@ -32,6 +40,15 @@ module.exports = {
       "users.toggle-status",
       "roles.view",
       "branches.view",
+      "profile.view",
+      "profile.update",
+      "profile.change-password",
+      "clients.view",
+      "clients.create",
+      "clients.update",
+      "vehicles.view",
+      "vehicles.create",
+      "vehicles.update",
       "works.view",
       "works.create",
       "works.update",
@@ -47,6 +64,15 @@ module.exports = {
       "dashboard.view",
       "users.view",
       "branches.view",
+      "profile.view",
+      "profile.update",
+      "profile.change-password",
+      "clients.view",
+      "clients.create",
+      "clients.update",
+      "vehicles.view",
+      "vehicles.create",
+      "vehicles.update",
       "works.view",
       "works.create",
       "works.update",
@@ -57,15 +83,23 @@ module.exports = {
       "employees.manage",
     ];
 
-    const staffPermissionCodes = ["dashboard.view", "works.view"];
+    const staffPermissionCodes = [
+      "dashboard.view",
+      "profile.view",
+      "profile.update",
+      "profile.change-password",
+      "clients.view",
+      "vehicles.view",
+      "works.view",
+    ];
 
     const mapCodesToRows = (roleName, codes) =>
-      codes.map((code) => ({
-        role_id: roleMap[roleName],
-        permission_id: permissionMap[code],
-        created_at: new Date(),
-        updated_at: new Date(),
-      }));
+      codes
+        .filter((code) => permissionMap[code])
+        .map((code) => ({
+          role_id: roleMap[roleName],
+          permission_id: permissionMap[code],
+        }));
 
     const rows = [
       ...superAdminRows,
@@ -74,7 +108,22 @@ module.exports = {
       ...mapCodesToRows("staff", staffPermissionCodes),
     ];
 
-    await queryInterface.bulkInsert("role_permissions", rows);
+    const rowsToInsert = rows
+      .filter(
+        (row) =>
+          row.role_id &&
+          row.permission_id &&
+          !existingPairs.has(`${row.role_id}-${row.permission_id}`)
+      )
+      .map((row) => ({
+        ...row,
+        created_at: new Date(),
+        updated_at: new Date(),
+      }));
+
+    if (rowsToInsert.length) {
+      await queryInterface.bulkInsert("role_permissions", rowsToInsert);
+    }
   },
 
   async down(queryInterface) {

@@ -4,6 +4,14 @@ const bcrypt = require("bcryptjs");
 
 module.exports = {
   async up(queryInterface) {
+    const [existingUsers] = await queryInterface.sequelize.query(
+      `SELECT email FROM users WHERE email = 'admin@tapicerialider.com' LIMIT 1;`
+    );
+
+    if (existingUsers.length) {
+      return;
+    }
+
     const passwordHash = await bcrypt.hash("Admin1234!", 10);
 
     const [roles] = await queryInterface.sequelize.query(

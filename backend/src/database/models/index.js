@@ -3,6 +3,10 @@ import Branch from "./Branch.js";
 import User from "./User.js";
 import Permission from "./Permission.js";
 import RolePermission from "./RolePermission.js";
+import Client from "./Client.js";
+import VehicleBrand from "./VehicleBrand.js";
+import VehicleModel from "./VehicleModel.js";
+import Vehicle from "./Vehicle.js";
 
 Role.hasMany(User, {
   foreignKey: "role_id",
@@ -58,4 +62,74 @@ RolePermission.belongsTo(Permission, {
   as: "permission",
 });
 
-export { Role, Branch, User, Permission, RolePermission };
+Branch.hasMany(Client, {
+  foreignKey: "branch_id",
+  as: "clients",
+});
+
+Client.belongsTo(Branch, {
+  foreignKey: "branch_id",
+  as: "branch",
+});
+
+Client.hasMany(Vehicle, {
+  foreignKey: "client_id",
+  as: "vehicles",
+});
+
+Vehicle.belongsTo(Client, {
+  foreignKey: "client_id",
+  as: "client",
+});
+
+Branch.hasMany(Vehicle, {
+  foreignKey: "branch_id",
+  as: "vehicles",
+});
+
+Vehicle.belongsTo(Branch, {
+  foreignKey: "branch_id",
+  as: "branch",
+});
+
+VehicleBrand.hasMany(VehicleModel, {
+  foreignKey: "brand_id",
+  as: "models",
+});
+
+VehicleModel.belongsTo(VehicleBrand, {
+  foreignKey: "brand_id",
+  as: "brand",
+});
+
+VehicleBrand.hasMany(Vehicle, {
+  foreignKey: "brand_id",
+  as: "vehicles",
+});
+
+Vehicle.belongsTo(VehicleBrand, {
+  foreignKey: "brand_id",
+  as: "brand",
+});
+
+VehicleModel.hasMany(Vehicle, {
+  foreignKey: "model_id",
+  as: "vehicles",
+});
+
+Vehicle.belongsTo(VehicleModel, {
+  foreignKey: "model_id",
+  as: "model",
+});
+
+export {
+  Role,
+  Branch,
+  User,
+  Permission,
+  RolePermission,
+  Client,
+  VehicleBrand,
+  VehicleModel,
+  Vehicle,
+};

@@ -2,39 +2,55 @@
 
 module.exports = {
   async up(queryInterface) {
-    await queryInterface.bulkInsert("roles", [
+    const rows = [
       {
         name: "super_admin",
         description: "Acceso total al sistema",
         is_system: true,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
       {
         name: "admin",
         description: "Administrador general",
         is_system: true,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
       {
         name: "manager",
         description: "Encargado de sucursal o sector",
         is_system: true,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
       {
         name: "staff",
         description: "Personal operativo",
         is_system: true,
+      },
+    ];
+
+    const [existingRoles] = await queryInterface.sequelize.query(
+      `SELECT name FROM roles;`
+    );
+
+    const existingNames = new Set(existingRoles.map((role) => role.name));
+
+    const rowsToInsert = rows
+      .filter((row) => !existingNames.has(row.name))
+      .map((row) => ({
+        ...row,
         created_at: new Date(),
         updated_at: new Date(),
-      },
-    ]);
+      }));
+
+    if (rowsToInsert.length) {
+      await queryInterface.bulkInsert("roles", rowsToInsert);
+    }
   },
 
   async down(queryInterface) {
-    await queryInterface.bulkDelete("roles", null, {});
+    await queryInterface.bulkDelete(
+      "roles",
+      {
+        name: ["super_admin", "admin", "manager", "staff"],
+      },
+      {}
+    );
   },
 };
