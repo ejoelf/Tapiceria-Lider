@@ -5,6 +5,8 @@ import rolesRoutes from "../modules/roles/routes.js";
 import branchesRoutes from "../modules/branches/routes.js";
 import clientsRoutes from "../modules/clients/routes.js";
 import vehiclesRoutes from "../modules/vehicles/routes.js";
+import workOrdersRoutes from "../modules/work-orders/routes.js";
+import workOrderMediaRoutes from "../modules/work-order-media/routes.js";
 
 const router = Router();
 
@@ -32,5 +34,7 @@ router.use("/roles", rolesRoutes);
 router.use("/branches", branchesRoutes);
 router.use("/clients", clientsRoutes);
 router.use("/vehicles", vehiclesRoutes);
+router.use("/work-orders", workOrdersRoutes);
+router.use("/work-order-media", workOrderMediaRoutes);
 
 export default router;
