@@ -7,30 +7,30 @@ import Client from "./Client.js";
 import VehicleBrand from "./VehicleBrand.js";
 import VehicleModel from "./VehicleModel.js";
 import Vehicle from "./Vehicle.js";
+import VehicleType from "./VehicleType.js";
 import WorkOrderStatus from "./WorkOrderStatus.js";
 import WorkOrder from "./WorkOrder.js";
 import WorkOrderStatusHistory from "./WorkOrderStatusHistory.js";
 import WorkOrderMedia from "./WorkOrderMedia.js";
+import MaterialCategory from "./MaterialCategory.js";
+import Material from "./Material.js";
+import InventoryMovement from "./InventoryMovement.js";
+import TechnicalPart from "./TechnicalPart.js";
+import Mold from "./Mold.js";
+import MoldFile from "./MoldFile.js";
+import Employee from "./Employee.js";
+import ProductCategory from "./ProductCategory.js";
+import Product from "./Product.js";
+import Income from "./Income.js";
+import Expense from "./Expense.js";
+import Notification from "./Notification.js";
+import Setting from "./Setting.js";
 
-Role.hasMany(User, {
-  foreignKey: "role_id",
-  as: "users",
-});
+Role.hasMany(User, { foreignKey: "role_id", as: "users" });
+User.belongsTo(Role, { foreignKey: "role_id", as: "role" });
 
-User.belongsTo(Role, {
-  foreignKey: "role_id",
-  as: "role",
-});
-
-Branch.hasMany(User, {
-  foreignKey: "branch_id",
-  as: "users",
-});
-
-User.belongsTo(Branch, {
-  foreignKey: "branch_id",
-  as: "branch",
-});
+Branch.hasMany(User, { foreignKey: "branch_id", as: "users" });
+User.belongsTo(Branch, { foreignKey: "branch_id", as: "branch" });
 
 Role.belongsToMany(Permission, {
   through: RolePermission,
@@ -38,203 +38,130 @@ Role.belongsToMany(Permission, {
   otherKey: "permission_id",
   as: "permissions",
 });
-
 Permission.belongsToMany(Role, {
   through: RolePermission,
   foreignKey: "permission_id",
   otherKey: "role_id",
   as: "roles",
 });
+Role.hasMany(RolePermission, { foreignKey: "role_id", as: "role_permissions" });
+RolePermission.belongsTo(Role, { foreignKey: "role_id", as: "role" });
+Permission.hasMany(RolePermission, { foreignKey: "permission_id", as: "role_permissions" });
+RolePermission.belongsTo(Permission, { foreignKey: "permission_id", as: "permission" });
 
-Role.hasMany(RolePermission, {
-  foreignKey: "role_id",
-  as: "role_permissions",
-});
+Branch.hasMany(Client, { foreignKey: "branch_id", as: "clients" });
+Client.belongsTo(Branch, { foreignKey: "branch_id", as: "branch" });
 
-RolePermission.belongsTo(Role, {
-  foreignKey: "role_id",
-  as: "role",
-});
+Client.hasMany(Vehicle, { foreignKey: "client_id", as: "vehicles" });
+Vehicle.belongsTo(Client, { foreignKey: "client_id", as: "client" });
 
-Permission.hasMany(RolePermission, {
-  foreignKey: "permission_id",
-  as: "role_permissions",
-});
+Branch.hasMany(Vehicle, { foreignKey: "branch_id", as: "vehicles" });
+Vehicle.belongsTo(Branch, { foreignKey: "branch_id", as: "branch" });
 
-RolePermission.belongsTo(Permission, {
-  foreignKey: "permission_id",
-  as: "permission",
-});
+VehicleBrand.hasMany(VehicleModel, { foreignKey: "brand_id", as: "models" });
+VehicleModel.belongsTo(VehicleBrand, { foreignKey: "brand_id", as: "brand" });
 
-Branch.hasMany(Client, {
-  foreignKey: "branch_id",
-  as: "clients",
-});
+VehicleBrand.hasMany(Vehicle, { foreignKey: "brand_id", as: "vehicles" });
+Vehicle.belongsTo(VehicleBrand, { foreignKey: "brand_id", as: "brand" });
 
-Client.belongsTo(Branch, {
-  foreignKey: "branch_id",
-  as: "branch",
-});
+VehicleModel.hasMany(Vehicle, { foreignKey: "model_id", as: "vehicles" });
+Vehicle.belongsTo(VehicleModel, { foreignKey: "model_id", as: "model" });
 
-Client.hasMany(Vehicle, {
-  foreignKey: "client_id",
-  as: "vehicles",
-});
+Branch.hasMany(WorkOrder, { foreignKey: "branch_id", as: "work_orders" });
+WorkOrder.belongsTo(Branch, { foreignKey: "branch_id", as: "branch" });
 
-Vehicle.belongsTo(Client, {
-  foreignKey: "client_id",
-  as: "client",
-});
+Client.hasMany(WorkOrder, { foreignKey: "client_id", as: "work_orders" });
+WorkOrder.belongsTo(Client, { foreignKey: "client_id", as: "client" });
 
-Branch.hasMany(Vehicle, {
-  foreignKey: "branch_id",
-  as: "vehicles",
-});
+Vehicle.hasMany(WorkOrder, { foreignKey: "vehicle_id", as: "work_orders" });
+WorkOrder.belongsTo(Vehicle, { foreignKey: "vehicle_id", as: "vehicle" });
 
-Vehicle.belongsTo(Branch, {
-  foreignKey: "branch_id",
-  as: "branch",
-});
+User.hasMany(WorkOrder, { foreignKey: "created_by_user_id", as: "created_work_orders" });
+WorkOrder.belongsTo(User, { foreignKey: "created_by_user_id", as: "created_by_user" });
 
-VehicleBrand.hasMany(VehicleModel, {
-  foreignKey: "brand_id",
-  as: "models",
-});
+WorkOrderStatus.hasMany(WorkOrder, { foreignKey: "current_status_id", as: "work_orders" });
+WorkOrder.belongsTo(WorkOrderStatus, { foreignKey: "current_status_id", as: "current_status" });
 
-VehicleModel.belongsTo(VehicleBrand, {
-  foreignKey: "brand_id",
-  as: "brand",
-});
+WorkOrder.hasMany(WorkOrderStatusHistory, { foreignKey: "work_order_id", as: "status_history" });
+WorkOrderStatusHistory.belongsTo(WorkOrder, { foreignKey: "work_order_id", as: "work_order" });
 
-VehicleBrand.hasMany(Vehicle, {
-  foreignKey: "brand_id",
-  as: "vehicles",
-});
+WorkOrderStatus.hasMany(WorkOrderStatusHistory, { foreignKey: "previous_status_id", as: "previous_status_changes" });
+WorkOrderStatusHistory.belongsTo(WorkOrderStatus, { foreignKey: "previous_status_id", as: "previous_status" });
 
-Vehicle.belongsTo(VehicleBrand, {
-  foreignKey: "brand_id",
-  as: "brand",
-});
+WorkOrderStatus.hasMany(WorkOrderStatusHistory, { foreignKey: "new_status_id", as: "new_status_changes" });
+WorkOrderStatusHistory.belongsTo(WorkOrderStatus, { foreignKey: "new_status_id", as: "new_status" });
 
-VehicleModel.hasMany(Vehicle, {
-  foreignKey: "model_id",
-  as: "vehicles",
-});
+User.hasMany(WorkOrderStatusHistory, { foreignKey: "changed_by_user_id", as: "status_changes" });
+WorkOrderStatusHistory.belongsTo(User, { foreignKey: "changed_by_user_id", as: "changed_by_user" });
 
-Vehicle.belongsTo(VehicleModel, {
-  foreignKey: "model_id",
-  as: "model",
-});
+WorkOrder.hasMany(WorkOrderMedia, { foreignKey: "work_order_id", as: "media_items" });
+WorkOrderMedia.belongsTo(WorkOrder, { foreignKey: "work_order_id", as: "work_order" });
 
-Branch.hasMany(WorkOrder, {
-  foreignKey: "branch_id",
-  as: "work_orders",
-});
+User.hasMany(WorkOrderMedia, { foreignKey: "uploaded_by_user_id", as: "uploaded_work_order_media" });
+WorkOrderMedia.belongsTo(User, { foreignKey: "uploaded_by_user_id", as: "uploaded_by_user" });
 
-WorkOrder.belongsTo(Branch, {
-  foreignKey: "branch_id",
-  as: "branch",
-});
+MaterialCategory.hasMany(Material, { foreignKey: "category_id", as: "materials" });
+Material.belongsTo(MaterialCategory, { foreignKey: "category_id", as: "category" });
 
-Client.hasMany(WorkOrder, {
-  foreignKey: "client_id",
-  as: "work_orders",
-});
+Branch.hasMany(Material, { foreignKey: "branch_id", as: "materials" });
+Material.belongsTo(Branch, { foreignKey: "branch_id", as: "branch" });
 
-WorkOrder.belongsTo(Client, {
-  foreignKey: "client_id",
-  as: "client",
-});
+Material.hasMany(InventoryMovement, { foreignKey: "material_id", as: "inventory_movements" });
+InventoryMovement.belongsTo(Material, { foreignKey: "material_id", as: "material" });
 
-Vehicle.hasMany(WorkOrder, {
-  foreignKey: "vehicle_id",
-  as: "work_orders",
-});
+WorkOrder.hasMany(InventoryMovement, { foreignKey: "work_order_id", as: "inventory_movements" });
+InventoryMovement.belongsTo(WorkOrder, { foreignKey: "work_order_id", as: "work_order" });
 
-WorkOrder.belongsTo(Vehicle, {
-  foreignKey: "vehicle_id",
-  as: "vehicle",
-});
+User.hasMany(InventoryMovement, { foreignKey: "created_by_user_id", as: "inventory_movements" });
+InventoryMovement.belongsTo(User, { foreignKey: "created_by_user_id", as: "created_by_user" });
 
-User.hasMany(WorkOrder, {
-  foreignKey: "created_by_user_id",
-  as: "created_work_orders",
-});
+TechnicalPart.hasMany(Mold, { foreignKey: "technical_part_id", as: "molds" });
+Mold.belongsTo(TechnicalPart, { foreignKey: "technical_part_id", as: "technical_part" });
 
-WorkOrder.belongsTo(User, {
-  foreignKey: "created_by_user_id",
-  as: "created_by_user",
-});
+VehicleBrand.hasMany(Mold, { foreignKey: "brand_id", as: "molds" });
+Mold.belongsTo(VehicleBrand, { foreignKey: "brand_id", as: "brand" });
 
-WorkOrderStatus.hasMany(WorkOrder, {
-  foreignKey: "current_status_id",
-  as: "work_orders",
-});
+VehicleModel.hasMany(Mold, { foreignKey: "model_id", as: "molds" });
+Mold.belongsTo(VehicleModel, { foreignKey: "model_id", as: "model" });
 
-WorkOrder.belongsTo(WorkOrderStatus, {
-  foreignKey: "current_status_id",
-  as: "current_status",
-});
+User.hasMany(Mold, { foreignKey: "created_by_user_id", as: "created_molds" });
+Mold.belongsTo(User, { foreignKey: "created_by_user_id", as: "created_by_user" });
 
-WorkOrder.hasMany(WorkOrderStatusHistory, {
-  foreignKey: "work_order_id",
-  as: "status_history",
-});
+Mold.hasMany(MoldFile, { foreignKey: "mold_id", as: "files" });
+MoldFile.belongsTo(Mold, { foreignKey: "mold_id", as: "mold" });
 
-WorkOrderStatusHistory.belongsTo(WorkOrder, {
-  foreignKey: "work_order_id",
-  as: "work_order",
-});
+User.hasMany(MoldFile, { foreignKey: "uploaded_by_user_id", as: "uploaded_mold_files" });
+MoldFile.belongsTo(User, { foreignKey: "uploaded_by_user_id", as: "uploaded_by_user" });
 
-WorkOrderStatus.hasMany(WorkOrderStatusHistory, {
-  foreignKey: "previous_status_id",
-  as: "previous_status_changes",
-});
+Branch.hasMany(Employee, { foreignKey: "branch_id", as: "employees" });
+Employee.belongsTo(Branch, { foreignKey: "branch_id", as: "branch" });
 
-WorkOrderStatusHistory.belongsTo(WorkOrderStatus, {
-  foreignKey: "previous_status_id",
-  as: "previous_status",
-});
+User.hasMany(Employee, { foreignKey: "linked_user_id", as: "employee_profiles" });
+Employee.belongsTo(User, { foreignKey: "linked_user_id", as: "linked_user" });
 
-WorkOrderStatus.hasMany(WorkOrderStatusHistory, {
-  foreignKey: "new_status_id",
-  as: "new_status_changes",
-});
+ProductCategory.hasMany(Product, { foreignKey: "category_id", as: "products" });
+Product.belongsTo(ProductCategory, { foreignKey: "category_id", as: "category" });
 
-WorkOrderStatusHistory.belongsTo(WorkOrderStatus, {
-  foreignKey: "new_status_id",
-  as: "new_status",
-});
+Branch.hasMany(Product, { foreignKey: "branch_id", as: "products" });
+Product.belongsTo(Branch, { foreignKey: "branch_id", as: "branch" });
 
-User.hasMany(WorkOrderStatusHistory, {
-  foreignKey: "changed_by_user_id",
-  as: "status_changes",
-});
+Branch.hasMany(Income, { foreignKey: "branch_id", as: "incomes" });
+Income.belongsTo(Branch, { foreignKey: "branch_id", as: "branch" });
 
-WorkOrderStatusHistory.belongsTo(User, {
-  foreignKey: "changed_by_user_id",
-  as: "changed_by_user",
-});
+WorkOrder.hasMany(Income, { foreignKey: "work_order_id", as: "incomes" });
+Income.belongsTo(WorkOrder, { foreignKey: "work_order_id", as: "work_order" });
 
-WorkOrder.hasMany(WorkOrderMedia, {
-  foreignKey: "work_order_id",
-  as: "media_items",
-});
+User.hasMany(Income, { foreignKey: "created_by_user_id", as: "created_incomes" });
+Income.belongsTo(User, { foreignKey: "created_by_user_id", as: "created_by_user" });
 
-WorkOrderMedia.belongsTo(WorkOrder, {
-  foreignKey: "work_order_id",
-  as: "work_order",
-});
+Branch.hasMany(Expense, { foreignKey: "branch_id", as: "expenses" });
+Expense.belongsTo(Branch, { foreignKey: "branch_id", as: "branch" });
 
-User.hasMany(WorkOrderMedia, {
-  foreignKey: "uploaded_by_user_id",
-  as: "uploaded_work_order_media",
-});
+User.hasMany(Expense, { foreignKey: "created_by_user_id", as: "created_expenses" });
+Expense.belongsTo(User, { foreignKey: "created_by_user_id", as: "created_by_user" });
 
-WorkOrderMedia.belongsTo(User, {
-  foreignKey: "uploaded_by_user_id",
-  as: "uploaded_by_user",
-});
+User.hasMany(Notification, { foreignKey: "user_id", as: "notifications" });
+Notification.belongsTo(User, { foreignKey: "user_id", as: "user" });
 
 export {
   Role,
@@ -246,8 +173,22 @@ export {
   VehicleBrand,
   VehicleModel,
   Vehicle,
+  VehicleType,
   WorkOrderStatus,
   WorkOrder,
   WorkOrderStatusHistory,
   WorkOrderMedia,
+  MaterialCategory,
+  Material,
+  InventoryMovement,
+  TechnicalPart,
+  Mold,
+  MoldFile,
+  Employee,
+  ProductCategory,
+  Product,
+  Income,
+  Expense,
+  Notification,
+  Setting,
 };

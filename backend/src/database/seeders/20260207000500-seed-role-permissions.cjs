@@ -57,15 +57,28 @@ module.exports = {
       "work-order-media.create",
       "work-order-media.update",
       "work-order-media.delete",
+      "materials.view",
+      "materials.create",
+      "materials.update",
+      "materials.movements.view",
+      "materials.movements.create",
+      "molds.view",
+      "molds.create",
+      "molds.update",
+      "molds.files.create",
+      "employees.view",
+      "employees.create",
+      "employees.update",
+      "products.view",
+      "products.create",
+      "products.update",
       "works.view",
       "works.create",
       "works.update",
       "portfolio.manage",
-      "products.manage",
-      "materials.manage",
-      "molds.manage",
-      "employees.manage",
       "finances.manage",
+      "notifications.view",
+      "notifications.manage"
     ];
 
     const managerPermissionCodes = [
@@ -88,14 +101,26 @@ module.exports = {
       "work-order-media.view",
       "work-order-media.create",
       "work-order-media.update",
+      "materials.view",
+      "materials.create",
+      "materials.update",
+      "materials.movements.view",
+      "materials.movements.create",
+      "molds.view",
+      "molds.create",
+      "molds.update",
+      "molds.files.create",
+      "employees.view",
+      "employees.create",
+      "employees.update",
+      "products.view",
+      "products.create",
+      "products.update",
       "works.view",
       "works.create",
       "works.update",
       "portfolio.manage",
-      "products.manage",
-      "materials.manage",
-      "molds.manage",
-      "employees.manage",
+      "notifications.view"
     ];
 
     const staffPermissionCodes = [
@@ -107,7 +132,13 @@ module.exports = {
       "vehicles.view",
       "work-orders.view",
       "work-order-media.view",
+      "materials.view",
+      "materials.movements.view",
+      "molds.view",
+      "employees.view",
+      "products.view",
       "works.view",
+      "notifications.view"
     ];
 
     const mapCodesToRows = (roleName, codes) =>

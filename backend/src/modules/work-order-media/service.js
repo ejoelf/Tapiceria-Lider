@@ -1,5 +1,7 @@
+import path from "path";
 import { User, WorkOrder, WorkOrderMedia } from "../../database/models/index.js";
 import AppError from "../../utils/appError.js";
+import { buildPublicFileUrl, normalizeSlashes } from "../../utils/fileStorage.js";
 
 const mediaInclude = [{ model: User, as: "uploaded_by_user" }];
 
@@ -15,6 +17,12 @@ function validateStage(stage) {
   if (!allowed.includes(stage)) {
     throw new AppError("stage debe ser before, during, after, cover u other.", 400);
   }
+}
+
+function inferMediaTypeFromMime(mimeType = "") {
+  if (mimeType.startsWith("image/")) return "image";
+  if (mimeType.startsWith("video/")) return "video";
+  return "file";
 }
 
 export async function listMediaByWorkOrder(workOrderId) {
@@ -89,7 +97,7 @@ export async function createMediaRecord(workOrderId, payload, authUserId = null)
     original_name: original_name ? String(original_name).trim() : null,
     mime_type: mime_type ? String(mime_type).trim() : null,
     file_size,
-    file_path: file_path ? String(file_path).trim() : null,
+    file_path: file_path ? normalizeSlashes(String(file_path).trim()) : null,
     file_url: file_url ? String(file_url).trim() : null,
     external_url: external_url ? String(external_url).trim() : null,
     thumbnail_url: thumbnail_url ? String(thumbnail_url).trim() : null,
@@ -98,6 +106,69 @@ export async function createMediaRecord(workOrderId, payload, authUserId = null)
     is_public_portfolio_asset: Boolean(is_public_portfolio_asset),
     is_active: Boolean(is_active),
     metadata,
+  });
+
+  const created = await WorkOrderMedia.findByPk(media.id, {
+    include: mediaInclude,
+  });
+
+  return created.toSafeJSON();
+}
+
+export async function createUploadedMediaRecord(workOrderId, file, body, req, authUserId = null) {
+  const workOrder = await WorkOrder.findByPk(workOrderId);
+  if (!workOrder) {
+    throw new AppError("Orden de trabajo no encontrada.", 404);
+  }
+
+  if (!file) {
+    throw new AppError("No se recibió ningún archivo.", 400);
+  }
+
+  const stage = body.stage || "other";
+  validateStage(stage);
+
+  const mediaType = body.media_type || inferMediaTypeFromMime(file.mimetype);
+  validateMediaType(mediaType);
+
+  const relativeFilePath = normalizeSlashes(
+    path.join("uploads", "work-orders", String(workOrderId), file.filename)
+  );
+
+  const fileUrl = buildPublicFileUrl(req, relativeFilePath);
+
+  if (body.is_cover === "true" || body.is_cover === true) {
+    await WorkOrderMedia.update(
+      { is_cover: false },
+      { where: { work_order_id: workOrderId } }
+    );
+  }
+
+  const media = await WorkOrderMedia.create({
+    work_order_id: workOrderId,
+    uploaded_by_user_id: authUserId,
+    media_type: mediaType,
+    stage,
+    title: body.title ? String(body.title).trim() : file.originalname,
+    description: body.description ? String(body.description).trim() : null,
+    storage_type: "local",
+    file_name: file.filename,
+    original_name: file.originalname,
+    mime_type: file.mimetype,
+    file_size: file.size,
+    file_path: relativeFilePath,
+    file_url: fileUrl,
+    external_url: null,
+    thumbnail_url: null,
+    sort_order: body.sort_order ? Number(body.sort_order) : 0,
+    is_cover: body.is_cover === "true" || body.is_cover === true,
+    is_public_portfolio_asset:
+      body.is_public_portfolio_asset === "true" ||
+      body.is_public_portfolio_asset === true,
+    is_active: true,
+    metadata: {
+      uploaded_via: "multer",
+    },
   });
 
   const created = await WorkOrderMedia.findByPk(media.id, {
@@ -152,7 +223,7 @@ export async function updateMediaRecord(mediaId, payload) {
   if (original_name !== undefined) media.original_name = original_name ? String(original_name).trim() : null;
   if (mime_type !== undefined) media.mime_type = mime_type ? String(mime_type).trim() : null;
   if (file_size !== undefined) media.file_size = file_size;
-  if (file_path !== undefined) media.file_path = file_path ? String(file_path).trim() : null;
+  if (file_path !== undefined) media.file_path = file_path ? normalizeSlashes(String(file_path).trim()) : null;
   if (file_url !== undefined) media.file_url = file_url ? String(file_url).trim() : null;
   if (external_url !== undefined) media.external_url = external_url ? String(external_url).trim() : null;
   if (thumbnail_url !== undefined) media.thumbnail_url = thumbnail_url ? String(thumbnail_url).trim() : null;

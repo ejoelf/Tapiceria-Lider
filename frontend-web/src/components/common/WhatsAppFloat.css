@@ -1,0 +1,20 @@
+.whatsapp-float {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  width: 62px;
+  height: 62px;
+  border-radius: 999px;
+  background: #111111;
+  color: #ffffff;
+  text-decoration: none;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22);
+  z-index: 1000;
+}
+
+.whatsapp-float span {
+  font-size: 24px;
+  font-weight: 800;
+}

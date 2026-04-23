@@ -1,0 +1,19 @@
+.empty-state-card {
+  background: #ffffff;
+  border: 1px dashed #d7d7d9;
+  border-radius: 18px;
+  padding: 28px;
+  text-align: center;
+}
+
+.empty-state-card h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #111111;
+}
+
+.empty-state-card p {
+  margin: 8px 0 0;
+  color: #666666;
+  font-size: 14px;
+}

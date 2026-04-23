@@ -1,0 +1,8 @@
+.public-layout {
+  min-height: 100vh;
+  background: #f7f7f8;
+}
+
+.public-layout__main {
+  min-height: calc(100vh - 78px);
+}

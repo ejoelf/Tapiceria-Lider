@@ -148,6 +148,96 @@ module.exports = {
         module: "work-order-media",
       },
       {
+        code: "materials.view",
+        name: "Ver materiales",
+        description: "Permite listar y ver materiales",
+        module: "materials",
+      },
+      {
+        code: "materials.create",
+        name: "Crear materiales",
+        description: "Permite crear materiales",
+        module: "materials",
+      },
+      {
+        code: "materials.update",
+        name: "Editar materiales",
+        description: "Permite editar materiales",
+        module: "materials",
+      },
+      {
+        code: "materials.movements.view",
+        name: "Ver movimientos de inventario",
+        description: "Permite ver movimientos de inventario",
+        module: "materials",
+      },
+      {
+        code: "materials.movements.create",
+        name: "Crear movimientos de inventario",
+        description: "Permite registrar ingresos y egresos",
+        module: "materials",
+      },
+      {
+        code: "molds.view",
+        name: "Ver moldes",
+        description: "Permite listar y ver moldes",
+        module: "molds",
+      },
+      {
+        code: "molds.create",
+        name: "Crear moldes",
+        description: "Permite crear moldes",
+        module: "molds",
+      },
+      {
+        code: "molds.update",
+        name: "Editar moldes",
+        description: "Permite editar moldes",
+        module: "molds",
+      },
+      {
+        code: "molds.files.create",
+        name: "Crear archivos de moldes",
+        description: "Permite agregar archivos a moldes",
+        module: "molds",
+      },
+      {
+        code: "employees.view",
+        name: "Ver empleados",
+        description: "Permite listar y ver empleados",
+        module: "employees",
+      },
+      {
+        code: "employees.create",
+        name: "Crear empleados",
+        description: "Permite crear empleados",
+        module: "employees",
+      },
+      {
+        code: "employees.update",
+        name: "Editar empleados",
+        description: "Permite editar empleados",
+        module: "employees",
+      },
+      {
+        code: "products.view",
+        name: "Ver productos",
+        description: "Permite listar y ver productos",
+        module: "products",
+      },
+      {
+        code: "products.create",
+        name: "Crear productos",
+        description: "Permite crear productos",
+        module: "products",
+      },
+      {
+        code: "products.update",
+        name: "Editar productos",
+        description: "Permite editar productos",
+        module: "products",
+      },
+      {
         code: "works.view",
         name: "Ver trabajos",
         description: "Permite ver órdenes de trabajo",
@@ -172,35 +262,23 @@ module.exports = {
         module: "portfolio",
       },
       {
-        code: "products.manage",
-        name: "Gestionar productos",
-        description: "Permite gestionar productos",
-        module: "products",
-      },
-      {
-        code: "materials.manage",
-        name: "Gestionar materiales",
-        description: "Permite gestionar inventario y materiales",
-        module: "materials",
-      },
-      {
-        code: "molds.manage",
-        name: "Gestionar moldes",
-        description: "Permite gestionar biblioteca técnica de moldes",
-        module: "molds",
-      },
-      {
-        code: "employees.manage",
-        name: "Gestionar empleados",
-        description: "Permite gestionar empleados",
-        module: "employees",
-      },
-      {
         code: "finances.manage",
         name: "Gestionar finanzas",
         description: "Permite gestionar caja, ingresos y egresos",
         module: "finances",
       },
+      {
+        code: "notifications.view",
+        name: "Ver notificaciones",
+        description: "Permite ver notificaciones del sistema",
+        module: "notifications",
+      },
+      {
+        code: "notifications.manage",
+        name: "Gestionar notificaciones",
+        description: "Permite gestionar notificaciones del sistema",
+        module: "notifications",
+      }
     ];
 
     const [existingPermissions] = await queryInterface.sequelize.query(

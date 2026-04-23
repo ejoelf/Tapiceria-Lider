@@ -5,8 +5,17 @@ import rolesRoutes from "../modules/roles/routes.js";
 import branchesRoutes from "../modules/branches/routes.js";
 import clientsRoutes from "../modules/clients/routes.js";
 import vehiclesRoutes from "../modules/vehicles/routes.js";
+import vehicleCatalogsRoutes from "../modules/vehicle-catalogs/routes.js";
 import workOrdersRoutes from "../modules/work-orders/routes.js";
 import workOrderMediaRoutes from "../modules/work-order-media/routes.js";
+import materialsRoutes from "../modules/materials/routes.js";
+import moldsRoutes from "../modules/molds/routes.js";
+import employeesRoutes from "../modules/employees/routes.js";
+import productsRoutes from "../modules/products/routes.js";
+import financesRoutes from "../modules/finances/routes.js";
+import dashboardRoutes from "../modules/dashboard/routes.js";
+import notificationsRoutes from "../modules/notifications/routes.js";
+import settingsRoutes from "../modules/settings/routes.js";
 
 const router = Router();
 
@@ -34,7 +43,16 @@ router.use("/roles", rolesRoutes);
 router.use("/branches", branchesRoutes);
 router.use("/clients", clientsRoutes);
 router.use("/vehicles", vehiclesRoutes);
+router.use("/vehicle-catalogs", vehicleCatalogsRoutes);
 router.use("/work-orders", workOrdersRoutes);
 router.use("/work-order-media", workOrderMediaRoutes);
+router.use("/materials", materialsRoutes);
+router.use("/molds", moldsRoutes);
+router.use("/employees", employeesRoutes);
+router.use("/products", productsRoutes);
+router.use("/finances", financesRoutes);
+router.use("/dashboard", dashboardRoutes);
+router.use("/notifications", notificationsRoutes);
+router.use("/settings", settingsRoutes);
 
 export default router;

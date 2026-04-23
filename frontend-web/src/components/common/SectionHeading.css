@@ -1,0 +1,32 @@
+.section-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.section-heading--center {
+  align-items: center;
+  text-align: center;
+}
+
+.section-heading__eyebrow {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #666666;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: 38px;
+  line-height: 1.1;
+  color: #111111;
+}
+
+.section-heading p {
+  margin: 0;
+  max-width: 760px;
+  color: #666666;
+  font-size: 15px;
+}

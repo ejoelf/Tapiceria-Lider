@@ -1,0 +1,144 @@
+.dashboard-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dashboard-page__hero {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 18px;
+  background: linear-gradient(135deg, #111111, #232326);
+  color: #ffffff;
+  border-radius: 22px;
+  padding: 28px;
+}
+
+.dashboard-page__hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dashboard-page__eyebrow {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.dashboard-page__hero-content h2 {
+  margin: 0;
+  font-size: 34px;
+  line-height: 1.1;
+}
+
+.dashboard-page__hero-content p {
+  margin: 0;
+  max-width: 620px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 15px;
+}
+
+.dashboard-page__hero-side {
+  display: grid;
+  gap: 14px;
+}
+
+.dashboard-page__mini-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dashboard-page__mini-card span {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.dashboard-page__mini-card strong {
+  font-size: 30px;
+  color: #ffffff;
+}
+
+.dashboard-page__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.dashboard-card {
+  background: #ffffff;
+  border: 1px solid #e9e9e9;
+  border-radius: 18px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dashboard-card span {
+  color: #666666;
+  font-size: 14px;
+}
+
+.dashboard-card strong {
+  font-size: 30px;
+  color: #111111;
+}
+
+.dashboard-page__panels {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 20px;
+}
+
+.dashboard-priority-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding: 20px;
+}
+
+.dashboard-priority-item {
+  background: #f7f7f8;
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dashboard-priority-item span {
+  color: #666666;
+  font-size: 14px;
+}
+
+.dashboard-priority-item strong {
+  color: #111111;
+  font-size: 28px;
+}
+
+.dashboard-page__quick-status {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dashboard-page__quick-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid #efefef;
+}
+
+.dashboard-page__quick-row:last-child {
+  border-bottom: none;
+}

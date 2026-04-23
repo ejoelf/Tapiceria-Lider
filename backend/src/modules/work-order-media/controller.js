@@ -1,6 +1,7 @@
 import asyncHandler from "../../utils/asyncHandler.js";
 import {
   createMediaRecord,
+  createUploadedMediaRecord,
   deleteMediaRecord,
   listMediaByWorkOrder,
   updateMediaRecord,
@@ -25,6 +26,22 @@ export const createWorkOrderMedia = asyncHandler(async (req, res) => {
   res.status(201).json({
     ok: true,
     message: "Media creada correctamente",
+    data: item,
+  });
+});
+
+export const uploadWorkOrderMediaFile = asyncHandler(async (req, res) => {
+  const item = await createUploadedMediaRecord(
+    Number(req.params.workOrderId),
+    req.file,
+    req.body,
+    req,
+    req.user?.id || null
+  );
+
+  res.status(201).json({
+    ok: true,
+    message: "Archivo subido correctamente",
     data: item,
   });
 });

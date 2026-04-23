@@ -1,0 +1,130 @@
+.work-orders-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.work-orders-page__messages {
+  padding: 16px;
+}
+
+.work-orders-page__actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.work-order-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.work-order-form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.work-order-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.work-order-form__field--full {
+  grid-column: 1 / -1;
+}
+
+.work-order-form__field label,
+.work-order-form__checkbox label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #222222;
+}
+
+.work-order-form__field input,
+.work-order-form__field select,
+.work-order-form__field textarea {
+  width: 100%;
+  border: 1px solid #d8d8d8;
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 14px;
+  outline: none;
+}
+
+.work-order-form__checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.work-order-form__checkbox label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.work-order-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.work-order-form__secondary,
+.work-order-form__primary {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 18px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.work-order-form__secondary {
+  background: #efefef;
+  color: #111111;
+}
+
+.work-order-form__primary {
+  background: #111111;
+  color: #ffffff;
+}
+
+.work-order-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.work-order-detail__block {
+  background: #f8f8f9;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.work-order-detail__block h4 {
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+
+.work-order-detail__block p {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: #222222;
+}
+
+.work-order-detail__actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.work-order-detail__list {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.work-order-detail__list li {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
