@@ -16,6 +16,7 @@ import financesRoutes from "../modules/finances/routes.js";
 import dashboardRoutes from "../modules/dashboard/routes.js";
 import notificationsRoutes from "../modules/notifications/routes.js";
 import settingsRoutes from "../modules/settings/routes.js";
+import publicSettingsRoutes from "../modules/settings/public-routes.js";
 
 const router = Router();
 
@@ -36,6 +37,8 @@ router.get("/health", (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
+
+router.use("/public/settings", publicSettingsRoutes);
 
 router.use("/auth", authRoutes);
 router.use("/users", usersRoutes);
