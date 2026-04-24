@@ -1,8 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
-import { companyInfo, navigationLinks } from "../../data/siteData";
+import { navigationLinks } from "../../data/siteData";
+import { useSiteSettings } from "../../hooks/useSiteSettings";
 import "./Navbar.css";
 
 function Navbar() {
+  const { companyInfo } = useSiteSettings();
+
   return (
     <header className="navbar">
       <div className="container navbar__inner">

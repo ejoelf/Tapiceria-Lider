@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
-import { companyInfo, navigationLinks } from "../../data/siteData";
+import { navigationLinks } from "../../data/siteData";
+import { useSiteSettings } from "../../hooks/useSiteSettings";
 import "./Footer.css";
 
 function Footer() {
+  const { companyInfo } = useSiteSettings();
+
   return (
     <footer className="footer">
       <div className="container footer__inner">

@@ -1,7 +1,12 @@
+import { useSiteSettings } from "../../hooks/useSiteSettings";
 import "./WhatsAppFloat.css";
 
 function WhatsAppFloat() {
-  const phone = import.meta.env.VITE_WHATSAPP_NUMBER || "543584000000";
+  const { companyInfo } = useSiteSettings();
+
+  const phoneRaw = companyInfo.whatsapp || import.meta.env.VITE_WHATSAPP_NUMBER || "543584000000";
+  const normalizedPhone = String(phoneRaw).replace(/\D/g, "");
+
   const message = encodeURIComponent(
     "Hola, quiero consultar por un trabajo o producto de Tapicería Líder."
   );
@@ -9,7 +14,7 @@ function WhatsAppFloat() {
   return (
     <a
       className="whatsapp-float"
-      href={`https://wa.me/${phone}?text=${message}`}
+      href={`https://wa.me/${normalizedPhone}?text=${message}`}
       target="_blank"
       rel="noreferrer"
       aria-label="Contactar por WhatsApp"

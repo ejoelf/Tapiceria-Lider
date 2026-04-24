@@ -1,8 +1,11 @@
 import SectionHeading from "../../components/common/SectionHeading";
-import { companyInfo, contactCards } from "../../data/siteData";
+import { contactCards } from "../../data/siteData";
+import { useSiteSettings } from "../../hooks/useSiteSettings";
 import "./ContactPage.css";
 
 function ContactPage() {
+  const { companyInfo } = useSiteSettings();
+
   const mapUrl =
     import.meta.env.VITE_GOOGLE_MAPS_EMBED ||
     "https://www.google.com/maps?q=Rio%20Cuarto%20Cordoba&output=embed";

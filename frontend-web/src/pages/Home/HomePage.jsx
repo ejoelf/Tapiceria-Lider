@@ -1,18 +1,19 @@
 import { Link } from "react-router-dom";
 import SectionHeading from "../../components/common/SectionHeading";
 import {
-  companyInfo,
   corePillars,
   courseList,
   featuredWorks,
   heroHighlights,
   productsCatalog,
-  siteSections,
   whyChooseUs,
 } from "../../data/siteData";
+import { useSiteSettings } from "../../hooks/useSiteSettings";
 import "./HomePage.css";
 
 function HomePage() {
+  const { companyInfo, siteSections } = useSiteSettings();
+
   return (
     <div className="home-page">
       <section className="home-hero">
@@ -25,11 +26,7 @@ function HomePage() {
             <h1>{companyInfo.name}</h1>
 
             <p className="home-hero__lead">
-              La web de una marca que nace para ser líder en Argentina. Nos
-              enfocamos en <strong>tapizado de volantes</strong>,{" "}
-              <strong>tapicería vehicular integral</strong>,{" "}
-              <strong>limpieza profunda de tapizados</strong>, venta de
-              productos y formación profesional.
+              {companyInfo.shortDescription}
             </p>
 
             <div className="home-hero__actions">

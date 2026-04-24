@@ -13,6 +13,7 @@ const navItems = [
   { to: "/finances", label: "Finanzas" },
   { to: "/notifications", label: "Notificaciones" },
   { to: "/master-catalogs", label: "Catálogos maestros" },
+  { to: "/settings", label: "Configuración" },
 ];
 
 function Sidebar() {

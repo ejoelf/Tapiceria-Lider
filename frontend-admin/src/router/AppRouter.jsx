@@ -12,6 +12,7 @@ import MoldsPage from "../pages/Molds/MoldsPage";
 import NotFoundPage from "../pages/NotFound/NotFoundPage";
 import NotificationsPage from "../pages/Notifications/NotificationsPage";
 import ProductsPage from "../pages/Products/ProductsPage";
+import SettingsPage from "../pages/Settings/SettingsPage";
 import VehiclesPage from "../pages/Vehicles/VehiclesPage";
 import WorkOrdersPage from "../pages/WorkOrders/WorkOrdersPage";
 import authStore from "../store/authStore";
@@ -38,15 +39,7 @@ function AppRouter() {
       <Routes>
         <Route path="/login" element={<LoginRoute />} />
 
-        <Route
-          path="/"
-          element={
-            <AdminRoute>
-              <DashboardPage />
-            </AdminRoute>
-          }
-        />
-
+        <Route path="/" element={<AdminRoute><DashboardPage /></AdminRoute>} />
         <Route path="/clients" element={<AdminRoute><ClientsPage /></AdminRoute>} />
         <Route path="/vehicles" element={<AdminRoute><VehiclesPage /></AdminRoute>} />
         <Route path="/work-orders" element={<AdminRoute><WorkOrdersPage /></AdminRoute>} />
@@ -57,6 +50,7 @@ function AppRouter() {
         <Route path="/finances" element={<AdminRoute><FinancesPage /></AdminRoute>} />
         <Route path="/notifications" element={<AdminRoute><NotificationsPage /></AdminRoute>} />
         <Route path="/master-catalogs" element={<AdminRoute><MasterCatalogsPage /></AdminRoute>} />
+        <Route path="/settings" element={<AdminRoute><SettingsPage /></AdminRoute>} />
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
