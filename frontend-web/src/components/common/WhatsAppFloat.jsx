@@ -3,7 +3,7 @@ import "./WhatsAppFloat.css";
 function WhatsAppFloat() {
   const phone = import.meta.env.VITE_WHATSAPP_NUMBER || "543584000000";
   const message = encodeURIComponent(
-    "Hola, quiero consultar por un trabajo de tapicería para mi vehículo."
+    "Hola, quiero consultar por un trabajo o producto de Tapicería Líder."
   );
 
   return (
@@ -15,7 +15,8 @@ function WhatsAppFloat() {
       aria-label="Contactar por WhatsApp"
       title="Contactar por WhatsApp"
     >
-      <span>W</span>
+      <span className="whatsapp-float__icon">✆</span>
+      <span className="whatsapp-float__label">WhatsApp</span>
     </a>
   );
 }

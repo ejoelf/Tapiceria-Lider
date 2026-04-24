@@ -1,25 +1,21 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { companyInfo, navigationLinks } from "../../data/siteData";
 import "./Navbar.css";
-
-const links = [
-  { to: "/", label: "Home" },
-  { to: "/nosotros", label: "Nosotros" },
-  { to: "/servicios", label: "Servicios" },
-  { to: "/trabajos", label: "Trabajos" },
-  { to: "/productos", label: "Productos" },
-  { to: "/contacto", label: "Contacto" },
-];
 
 function Navbar() {
   return (
     <header className="navbar">
-      <div className="navbar__inner">
-        <NavLink to="/" className="navbar__brand">
-          <span>Tapicería Líder</span>
-        </NavLink>
+      <div className="container navbar__inner">
+        <Link to="/" className="navbar__brand">
+          <span className="navbar__brand-mark">TL</span>
+          <div className="navbar__brand-copy">
+            <strong>{companyInfo.name}</strong>
+            <small>{companyInfo.slogan}</small>
+          </div>
+        </Link>
 
         <nav className="navbar__nav">
-          {links.map((link) => (
+          {navigationLinks.map((link) => (
             <NavLink
               key={link.to}
               to={link.to}
@@ -33,9 +29,9 @@ function Navbar() {
           ))}
         </nav>
 
-        <a className="navbar__cta" href="/contacto">
+        <NavLink to="/contacto" className="navbar__cta">
           Solicitar presupuesto
-        </a>
+        </NavLink>
       </div>
     </header>
   );
