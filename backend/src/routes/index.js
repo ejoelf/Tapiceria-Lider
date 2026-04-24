@@ -17,6 +17,8 @@ import dashboardRoutes from "../modules/dashboard/routes.js";
 import notificationsRoutes from "../modules/notifications/routes.js";
 import settingsRoutes from "../modules/settings/routes.js";
 import publicSettingsRoutes from "../modules/settings/public-routes.js";
+import monthlySummaryRoutes from "../modules/monthly-summary/routes.js";
+import exportsRoutes from "../modules/exports/routes.js";
 
 const router = Router();
 
@@ -57,5 +59,7 @@ router.use("/finances", financesRoutes);
 router.use("/dashboard", dashboardRoutes);
 router.use("/notifications", notificationsRoutes);
 router.use("/settings", settingsRoutes);
+router.use("/monthly-summary", monthlySummaryRoutes);
+router.use("/exports", exportsRoutes);
 
 export default router;
