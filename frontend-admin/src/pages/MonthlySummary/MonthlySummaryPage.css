@@ -1,0 +1,139 @@
+.monthly-summary-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.monthly-summary-page__filters {
+  padding: 20px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.monthly-summary-page__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 180px;
+}
+
+.monthly-summary-page__field label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.monthly-summary-page__field input {
+  border: 1px solid #d8d8d8;
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 14px;
+}
+
+.monthly-summary-page__download-btn {
+  border: none;
+  background: #111111;
+  color: #ffffff;
+  padding: 12px 18px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.monthly-summary-page__download-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.monthly-summary-page__metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.monthly-summary-card {
+  background: #ffffff;
+  border: 1px solid #e8eaee;
+  border-radius: 18px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.monthly-summary-card span {
+  color: #666666;
+  font-size: 14px;
+}
+
+.monthly-summary-card strong {
+  font-size: 28px;
+  color: #111111;
+}
+
+.monthly-summary-page__panels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.monthly-summary-page__body {
+  padding: 20px;
+}
+
+.monthly-summary-page__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.monthly-summary-page__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #efefef;
+}
+
+.monthly-summary-page__row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.monthly-summary-page__table {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.monthly-summary-page__table-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid #efefef;
+}
+
+.monthly-summary-page__table-row:last-child {
+  border-bottom: none;
+}
+
+.monthly-summary-page__table-row strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.monthly-summary-page__table-row p {
+  margin: 0;
+  color: #666666;
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .monthly-summary-page__metrics,
+  .monthly-summary-page__panels {
+    grid-template-columns: 1fr;
+  }
+}

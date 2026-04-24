@@ -1,0 +1,64 @@
+.exports-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.exports-page__body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.exports-page__filters {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.exports-page__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 180px;
+}
+
+.exports-page__field label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.exports-page__field input {
+  border: 1px solid #d8d8d8;
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 14px;
+}
+
+.exports-page__actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.exports-page__actions button {
+  border: none;
+  background: #111111;
+  color: #ffffff;
+  padding: 14px 18px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.exports-page__actions button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.exports-page__note {
+  margin: 0;
+  color: #666666;
+  line-height: 1.7;
+}

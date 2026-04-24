@@ -1,8 +1,8 @@
 import asyncHandler from "../../utils/asyncHandler.js";
-import { getDashboardMetrics } from "./service.js";
+import { getDashboardSummary } from "./service.js";
 
-export const getDashboardData = asyncHandler(async (req, res) => {
-  const data = await getDashboardMetrics();
+export const getDashboard = asyncHandler(async (req, res) => {
+  const data = await getDashboardSummary();
 
   res.status(200).json({
     ok: true,

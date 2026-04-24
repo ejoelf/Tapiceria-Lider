@@ -1,9 +1,19 @@
 import { useEffect, useMemo, useState } from "react";
+import DashboardBarChart from "../../components/charts/DashboardBarChart";
+import DashboardLineChart from "../../components/charts/DashboardLineChart";
+import DashboardPieChart from "../../components/charts/DashboardPieChart";
 import SectionCard from "../../components/ui/SectionCard";
 import StatelessMessage from "../../components/ui/StatelessMessage";
 import StatusBadge from "../../components/ui/StatusBadge";
 import { getDashboardRequest } from "../../services/dashboardService";
 import "./DashboardPage.css";
+
+function objectToChartArray(obj = {}) {
+  return Object.entries(obj).map(([name, value]) => ({
+    name,
+    value: Number(value || 0),
+  }));
+}
 
 function DashboardPage() {
   const [data, setData] = useState(null);
@@ -33,15 +43,15 @@ function DashboardPage() {
   const counters = data?.counters || {};
   const charts = data?.charts || {};
   const priorities = charts?.work_orders_by_priority || {};
+  const statuses = charts?.work_orders_by_status || {};
+  const financeEvolution = charts?.monthly_finance_evolution || [];
+
+  const priorityArray = useMemo(() => objectToChartArray(priorities), [priorities]);
+  const statusArray = useMemo(() => objectToChartArray(statuses), [statuses]);
 
   const totalPriority = useMemo(() => {
-    return (
-      Number(priorities.low || 0) +
-      Number(priorities.medium || 0) +
-      Number(priorities.high || 0) +
-      Number(priorities.urgent || 0)
-    );
-  }, [priorities]);
+    return priorityArray.reduce((acc, item) => acc + Number(item.value || 0), 0);
+  }, [priorityArray]);
 
   if (loading) {
     return (
@@ -115,40 +125,43 @@ function DashboardPage() {
         </article>
       </section>
 
-      <div className="dashboard-page__panels">
+      <div className="dashboard-page__charts-grid">
+        <SectionCard title="Evolución financiera mensual">
+          <div className="dashboard-page__chart-body">
+            <DashboardLineChart
+              data={financeEvolution}
+              xKey="name"
+              firstLineKey="ingresos"
+              secondLineKey="egresos"
+              firstName="Ingresos"
+              secondName="Egresos"
+            />
+          </div>
+        </SectionCard>
+
+        <SectionCard title="Trabajos por estado">
+          <div className="dashboard-page__chart-body">
+            <DashboardPieChart
+              data={statusArray}
+              dataKey="value"
+              nameKey="name"
+              small
+            />
+          </div>
+        </SectionCard>
+      </div>
+
+      <div className="dashboard-page__charts-grid">
         <SectionCard title="Trabajos por prioridad">
-          <div className="dashboard-priority-list">
-            <div className="dashboard-priority-item">
-              <span>Baja</span>
-              <strong>{priorities.low || 0}</strong>
-              <StatusBadge variant="default">
-                {totalPriority ? `${Math.round((Number(priorities.low || 0) / totalPriority) * 100)}%` : "0%"}
-              </StatusBadge>
-            </div>
-
-            <div className="dashboard-priority-item">
-              <span>Media</span>
-              <strong>{priorities.medium || 0}</strong>
-              <StatusBadge variant="warning">
-                {totalPriority ? `${Math.round((Number(priorities.medium || 0) / totalPriority) * 100)}%` : "0%"}
-              </StatusBadge>
-            </div>
-
-            <div className="dashboard-priority-item">
-              <span>Alta</span>
-              <strong>{priorities.high || 0}</strong>
-              <StatusBadge variant="danger">
-                {totalPriority ? `${Math.round((Number(priorities.high || 0) / totalPriority) * 100)}%` : "0%"}
-              </StatusBadge>
-            </div>
-
-            <div className="dashboard-priority-item">
-              <span>Urgente</span>
-              <strong>{priorities.urgent || 0}</strong>
-              <StatusBadge variant="danger">
-                {totalPriority ? `${Math.round((Number(priorities.urgent || 0) / totalPriority) * 100)}%` : "0%"}
-              </StatusBadge>
-            </div>
+          <div className="dashboard-page__chart-body">
+            <DashboardBarChart
+              data={priorityArray}
+              dataKey="value"
+              xKey="name"
+              title="Cantidad"
+              colorByIndex
+              small
+            />
           </div>
         </SectionCard>
 
@@ -181,6 +194,53 @@ function DashboardPage() {
                 ${Number(counters.balance || 0).toLocaleString("es-AR")}
               </StatusBadge>
             </div>
+
+            <div className="dashboard-page__quick-row">
+              <span>Peso prioridad total</span>
+              <StatusBadge variant="default">
+                {totalPriority}
+              </StatusBadge>
+            </div>
+          </div>
+        </SectionCard>
+      </div>
+
+      <div className="dashboard-page__panels">
+        <SectionCard title="Detalle de prioridades">
+          <div className="dashboard-priority-list">
+            {priorityArray.length ? (
+              priorityArray.map((item) => (
+                <div key={item.name} className="dashboard-priority-item">
+                  <span>{item.name}</span>
+                  <strong>{item.value}</strong>
+                  <StatusBadge variant="default">
+                    {totalPriority ? `${Math.round((item.value / totalPriority) * 100)}%` : "0%"}
+                  </StatusBadge>
+                </div>
+              ))
+            ) : (
+              <div className="dashboard-page__chart-body">
+                <StatelessMessage>Sin datos de prioridad.</StatelessMessage>
+              </div>
+            )}
+          </div>
+        </SectionCard>
+
+        <SectionCard title="Detalle de estados">
+          <div className="dashboard-priority-list">
+            {statusArray.length ? (
+              statusArray.map((item) => (
+                <div key={item.name} className="dashboard-priority-item">
+                  <span>{item.name}</span>
+                  <strong>{item.value}</strong>
+                  <StatusBadge variant="default">{item.value}</StatusBadge>
+                </div>
+              ))
+            ) : (
+              <div className="dashboard-page__chart-body">
+                <StatelessMessage>Sin datos de estado.</StatelessMessage>
+              </div>
+            )}
           </div>
         </SectionCard>
       </div>

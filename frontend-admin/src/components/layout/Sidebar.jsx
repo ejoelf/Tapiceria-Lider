@@ -13,6 +13,8 @@ const navItems = [
   { to: "/finances", label: "Finanzas" },
   { to: "/notifications", label: "Notificaciones" },
   { to: "/master-catalogs", label: "Catálogos maestros" },
+  { to: "/monthly-summary", label: "Resumen mensual" },
+  { to: "/exports", label: "Exportaciones" },
   { to: "/settings", label: "Configuración" },
 ];
 

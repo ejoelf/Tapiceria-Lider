@@ -4,11 +4,13 @@ import AdminLayout from "../components/layout/AdminLayout";
 import ClientsPage from "../pages/Clients/ClientsPage";
 import DashboardPage from "../pages/Dashboard/DashboardPage";
 import EmployeesPage from "../pages/Employees/EmployeesPage";
+import ExportsPage from "../pages/Exports/ExportsPage";
 import FinancesPage from "../pages/Finances/FinancesPage";
 import LoginPage from "../pages/Login/LoginPage";
 import MasterCatalogsPage from "../pages/MasterCatalogs/MasterCatalogsPage";
 import MaterialsPage from "../pages/Materials/MaterialsPage";
 import MoldsPage from "../pages/Molds/MoldsPage";
+import MonthlySummaryPage from "../pages/MonthlySummary/MonthlySummaryPage";
 import NotFoundPage from "../pages/NotFound/NotFoundPage";
 import NotificationsPage from "../pages/Notifications/NotificationsPage";
 import ProductsPage from "../pages/Products/ProductsPage";
@@ -50,6 +52,8 @@ function AppRouter() {
         <Route path="/finances" element={<AdminRoute><FinancesPage /></AdminRoute>} />
         <Route path="/notifications" element={<AdminRoute><NotificationsPage /></AdminRoute>} />
         <Route path="/master-catalogs" element={<AdminRoute><MasterCatalogsPage /></AdminRoute>} />
+        <Route path="/monthly-summary" element={<AdminRoute><MonthlySummaryPage /></AdminRoute>} />
+        <Route path="/exports" element={<AdminRoute><ExportsPage /></AdminRoute>} />
         <Route path="/settings" element={<AdminRoute><SettingsPage /></AdminRoute>} />
 
         <Route path="*" element={<NotFoundPage />} />

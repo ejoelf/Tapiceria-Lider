@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   exportMonthlySummaryAsCsv,
   exportMonthlySummaryAsJson,
+  exportMonthlySummaryAsPdf,
 } from "./controller.js";
 import { protect } from "../../middlewares/auth.middleware.js";
 import { requirePermission } from "../../middlewares/authorization.middleware.js";
@@ -20,6 +21,12 @@ router.get(
   "/monthly-summary/csv",
   requirePermission("dashboard.view"),
   exportMonthlySummaryAsCsv
+);
+
+router.get(
+  "/monthly-summary/pdf",
+  requirePermission("dashboard.view"),
+  exportMonthlySummaryAsPdf
 );
 
 export default router;
