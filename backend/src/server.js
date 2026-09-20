@@ -1,23 +1,19 @@
-import "./database/models/index.js";
-import app from "./app.js";
-import env from "./config/env.js";
-import { connectDB } from "./config/db.js";
-
-async function startServer() {
-  try {
-    await connectDB();
-
-    app.listen(env.PORT, () => {
-      console.log("====================================");
-      console.log(`🚀 Servidor corriendo en puerto ${env.PORT}`);
-      console.log(`🌐 API: http://localhost:${env.PORT}/api`);
-      console.log(`❤️ Health: http://localhost:${env.PORT}/api/health`);
-      console.log("====================================");
-    });
-  } catch (error) {
-    console.error("❌ No se pudo iniciar el servidor");
-    process.exit(1);
-  }
+import app from './app.js';
+import env from './config/env.js';
+import { sequelize } from './database/v2.js';
+try {
+  await sequelize.authenticate();
+  const server = app.listen(env.PORT, '0.0.0.0', () =>
+    console.log(`Líder API lista en http://localhost:${env.PORT}/api`),
+  );
+  for (const signal of ['SIGINT', 'SIGTERM'])
+    process.on(signal, () =>
+      server.close(async () => {
+        await sequelize.close();
+        process.exit(0);
+      }),
+    );
+} catch (error) {
+  console.error('No se pudo iniciar Líder API. Revisá la conexión y las migraciones.');
+  process.exit(1);
 }
-
-startServer();
