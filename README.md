@@ -6,7 +6,7 @@ La V2 está preparada para revisión local. No se creó ni se desplegó infraest
 
 ## Empezar en VS Code
 
-Requisitos: **Node.js 24 LTS**, npm y **Docker Desktop** iniciado. También podés usar un PostgreSQL existente siguiendo `docs/INSTALACION.md`.
+Requisitos: **Node.js 22.12 o superior** (24 LTS recomendado), npm y PostgreSQL. Podés usar tu PostgreSQL instalado en Windows o Docker Desktop. Docker es opcional.
 
 La versión para revisar está en la rama `codex/lider-v2`. Si ya tenés el repositorio, guardá tus cambios locales antes de cambiar de rama. Desde la raíz del repositorio:
 
@@ -16,7 +16,21 @@ git switch codex/lider-v2
 git pull --ff-only
 npm ci
 npm run setup:local
-docker compose up -d
+```
+
+**Si ya tenés PostgreSQL instalado**, configurá la conexión con su usuario y contraseña:
+
+```bash
+npm run setup:postgres
+```
+
+El asistente comprueba la conexión, crea una base vacía si no existe y guarda la URL sin exponer la contraseña. Conserva los datos de bases existentes y las cuentas del CRM. En Windows, usá la terminal PowerShell integrada de VS Code si Git Bash no ofrece una entrada interactiva compatible.
+
+**Si elegís Docker**, abrí Docker Desktop y ejecutá `docker compose up -d` en lugar del asistente. No necesitás ejecutar ambas opciones.
+
+Después de tener la base disponible:
+
+```bash
 npm run db:migrate
 npm run db:seed
 npm run dev
@@ -64,9 +78,10 @@ Un único `package-lock.json` y workspaces npm. El backend concentra las reglas 
 npm run typecheck
 npm run build
 npm test
+npm audit
 ```
 
-`npm test` ejecuta las pruebas de dominio y **solo ejecuta la integración completa si existe `TEST_DATABASE_URL`**. La configuración reproducible está en `docs/VALIDACION.md`; GitHub Actions usa PostgreSQL y valida migraciones, backend y builds.
+`npm test` ejecuta las pruebas de dominio y **solo ejecuta la integración completa si existe `TEST_DATABASE_URL`**. La configuración reproducible está en `docs/VALIDACION.md`; GitHub Actions usa PostgreSQL y valida migraciones, backend, builds y dependencias de producción y desarrollo. También comprueba el setup en Windows con Node 22.14.
 
 ## Documentación
 

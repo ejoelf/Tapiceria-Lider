@@ -2,6 +2,7 @@ import { randomBytes } from 'node:crypto';
 import { mkdir, writeFile, access, readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 const root = fileURLToPath(new URL('../', import.meta.url));
 async function exists(p) {
   try {
@@ -65,4 +66,19 @@ await create(
 console.log(
   'Configuración preparada. Las cuentas LOCALES están en .local/credentials.json (no se sube a Git).',
 );
-console.log('Siguiente: docker compose up -d · npm run db:migrate · npm run db:seed · npm run dev');
+const docker = spawnSync('docker', ['compose', 'version'], {
+  stdio: 'ignore',
+  timeout: 5000,
+  windowsHide: true,
+});
+if (docker.status === 0) {
+  console.log(
+    'Con Docker: docker compose up -d · npm run db:migrate · npm run db:seed · npm run dev',
+  );
+  console.log('Con PostgreSQL ya instalado: npm run setup:postgres');
+} else {
+  console.log(
+    'Docker no está disponible. Si ya tenés PostgreSQL instalado, ejecutá npm run setup:postgres.',
+  );
+  console.log('El asistente comprueba tus credenciales locales antes de guardar la conexión.');
+}

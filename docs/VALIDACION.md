@@ -7,6 +7,7 @@ npm ci
 npm run typecheck
 npm run build
 npm test
+npm audit
 ```
 
 La suite de integración exige `TEST_DATABASE_URL` apuntando a una base cuyo nombre termine en `_test`. No elimina tablas de otra base. Crea registros de prueba con identificadores únicos y usa una carpeta temporal para archivos.
@@ -22,7 +23,13 @@ npm run db:migrate
 npm test
 ```
 
-Eliminar esas variables de la terminal o abrir una nueva al volver a desarrollar. No reutilizar credenciales de producción. GitHub Actions prepara una base PostgreSQL 17 desechable y ejecuta los mismos comandos.
+Eliminar esas variables de la terminal o abrir una nueva al volver a desarrollar. No reutilizar credenciales de producción. GitHub Actions prepara una base PostgreSQL 17 desechable y ejecuta los mismos comandos. Su auditoría incluye las dependencias de desarrollo, además de las de producción.
+
+## Configuración local en Windows
+
+`npm run test:setup` comprueba contraseñas con símbolos, rutas con espacios, mensajes cuando falta Docker, conservación de cuentas existentes y del contenido de `.env`, copias privadas y rechazo de cambios cuando la conexión falla. CI lo ejecuta también en Windows con Node 22.14.0.
+
+La prueba de creación de bases requiere adicionalmente `TEST_POSTGRES_PROVISIONING=true`, un servidor PostgreSQL nativo desechable y un usuario con permiso `CREATEDB`. La usa CI: crea una base de nombre aleatorio exclusivo de la prueba, verifica su reutilización y el rechazo de una contraseña errónea, y elimina únicamente esa base al terminar. No se habilita sobre la base del taller ni en el entorno PGlite.
 
 ## Cobertura ejecutada durante el desarrollo
 

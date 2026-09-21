@@ -13,17 +13,20 @@
   },
   "scripts": {
     "setup:local": "node scripts/setup-local.mjs",
-    "db:migrate": "npm run db:migrate -w backend",
+    "setup:postgres": "node backend/scripts/setup-postgres.mjs",
+    "db:check": "node backend/scripts/check-db.mjs",
+    "db:migrate": "npm run db:check && npm run db:migrate -w backend",
     "db:seed": "npm run db:seed -w backend",
     "dev": "concurrently -k -n API,CRM,WEB -c cyan,magenta,yellow \"npm run dev -w backend\" \"npm run dev -w frontend-admin\" \"npm run dev -w frontend-web\"",
     "build": "npm run build -w frontend-admin && npm run build -w frontend-web",
     "test": "npm run test -w backend",
+    "test:setup": "node --test backend/tests/local-setup.test.js",
     "typecheck": "npm run typecheck -w frontend-admin && npm run typecheck -w frontend-web",
     "check": "npm run test && npm run typecheck && npm run build",
     "format": "prettier --write backend/src/v2 backend/src/config backend/src/app.js backend/src/server.js backend/scripts backend/tests frontend-admin/src frontend-web/app frontend-web/components frontend-web/lib scripts"
   },
   "devDependencies": {
-    "concurrently": "9.2.1",
+    "concurrently": "9.2.4",
     "prettier": "3.6.2"
   },
   "overrides": {

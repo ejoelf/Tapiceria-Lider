@@ -24,6 +24,7 @@ jobs:
     env:
       DATABASE_URL: postgresql://lider:isolated-ci-password@127.0.0.1:5432/lider_test
       TEST_DATABASE_URL: postgresql://lider:isolated-ci-password@127.0.0.1:5432/lider_test
+      TEST_POSTGRES_PROVISIONING: 'true'
       SESSION_SECRET: isolated-ci-session-secret-never-used-in-production
       AUTH_PROVIDER: local
       STORAGE_PROVIDER: local
@@ -41,4 +42,14 @@ jobs:
       - run: npm test
       - run: npm run typecheck
       - run: npm run build
-      - run: npm audit --omit=dev --audit-level=high
+      - run: npm audit --audit-level=high
+  setup-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.14.0'
+          cache: npm
+      - run: npm ci
+      - run: npm run test:setup
