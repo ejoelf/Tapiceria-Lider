@@ -1,31 +1,13 @@
-import { Sequelize } from "sequelize";
-import env from "./env.js";
-
-export const sequelize = new Sequelize(
-  env.DB_NAME,
-  env.DB_USER,
-  env.DB_PASSWORD,
-  {
-    host: env.DB_HOST,
-    port: env.DB_PORT,
-    dialect: "postgres",
-    logging: false,
-    define: {
-      underscored: true,
-      timestamps: true,
-    },
-  }
-);
-
-export async function connectDB() {
-  try {
-    await sequelize.authenticate();
-    console.log("✅ Base de datos conectada correctamente");
-  } catch (error) {
-    console.error("❌ Error al conectar la base de datos:");
-    console.error(error.message);
-    throw error;
-  }
-}
-
+import { Sequelize } from 'sequelize';
+import pg from 'pg';
+import env from './env.js';
+export const sequelize = new Sequelize(env.DATABASE_URL, {
+  dialect: 'postgres',
+  dialectModule: pg,
+  logging: false,
+  define: { underscored: true, timestamps: true },
+  dialectOptions: env.DB_SSL ? { ssl: { require: true, rejectUnauthorized: true } } : {},
+  pool: { max: Number(process.env.DB_POOL_MAX || 5), min: 0, acquire: 30000, idle: 10000 },
+});
+export const connectDB = () => sequelize.authenticate();
 export default sequelize;

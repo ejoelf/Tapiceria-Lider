@@ -1,17 +1,17 @@
 {
   "name": "tapiceria-lider-backend",
-  "version": "1.0.0",
-  "description": "API backend de Tapicería Líder",
+  "version": "2.0.0",
+  "description": "API backend de Tapicer\u00eda L\u00edder",
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/server.js",
+    "dev": "node --watch src/server.js",
     "start": "node src/server.js",
-    "db:migrate": "dotenv -e .env -- sequelize-cli db:migrate",
-    "db:migrate:undo": "dotenv -e .env -- sequelize-cli db:migrate:undo",
-    "db:migrate:undo:all": "dotenv -e .env -- sequelize-cli db:migrate:undo:all",
-    "db:seed": "dotenv -e .env -- sequelize-cli db:seed:all",
-    "db:seed:undo": "dotenv -e .env -- sequelize-cli db:seed:undo:all"
+    "db:migrate": "sequelize-cli db:migrate",
+    "db:status": "sequelize-cli db:migrate:status",
+    "db:seed": "node scripts/seed.mjs",
+    "user:create": "node scripts/create-user.mjs",
+    "test": "node --test --test-concurrency=1 tests/*.test.js"
   },
   "keywords": [
     "tapiceria",
@@ -26,19 +26,25 @@
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
-    "dotenv-cli": "^11.0.0",
     "express": "^5.1.0",
     "helmet": "^8.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "morgan": "^1.10.1",
-    "multer": "^2.0.2",
+    "multer": "^2.3.0",
     "pdfkit": "^0.18.0",
     "pg": "^8.16.3",
-    "pg-hstore": "^2.3.4",
-    "sequelize": "^6.37.7"
+    "sequelize": "^6.37.8",
+    "@supabase/supabase-js": "2.116.0",
+    "cookie-parser": "1.4.7",
+    "express-rate-limit": "8.7.0",
+    "zod": "4.3.6",
+    "sharp": "0.35.4",
+    "decimal.js": "10.6.0",
+    "file-type": "21.3.4"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10",
-    "sequelize-cli": "^6.6.3"
+    "sequelize-cli": "^6.6.3",
+    "supertest": "7.2.2"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }
